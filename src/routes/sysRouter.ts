@@ -8,8 +8,9 @@ import express from 'express';
 const sysRoutes = () => {
     const router = express.Router();
 
+    router.get('/sys', (req, res) => res.json({ sys: "Demo App", env: process.env }));
+    router.options('/sys', (req, res) => res.json({ sys: "Demo App", env: process.env }));
     router.get('/', (req, res) => res.json({ message: "Welcome to MDB/SAT Demo Service" }));
-    router.options('/', (req, res) => res.json({ sys: "Demo App", env: process.env }));
 
     return router;
 };

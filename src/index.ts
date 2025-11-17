@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const mongoUri = (process.env.MONGO_URI || process.env['SERVICE_BINDING__MONGO__URI'] || process.env['MONGODBATLAS_CLUSTER_CONNECTIONSTRING']) as string;
+const mongoUri = (process.env['MONGODBATLAS_CLUSTER_CONNECTIONSTRING'] || process.env.MONGO_URI || process.env['SERVICE_BINDING__MONGO__URI']) as string;
 
 // Enable CORS for all routes, or configure it for specific origins
 app.use(cors({
@@ -26,7 +26,8 @@ app.use((req, res, next) => console.log({
   msg: 'Request: ',
   date: Date.now(),
   method: req.method,
-  path: req.path
+  path: req.path,
+  env: process.env
 }) as unknown as undefined || next());
 
 // Add this line to parse JSON request bodies.
@@ -59,7 +60,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     process.env.MSG_ERROR = (err as Error)?.message || "";
     console.error({
       msg: "MongoDB connection error",
-      data: { uri: mongoUri },
+      data: { uri: mongoUri, env: process.env },
       error: err
     });
   }
@@ -70,7 +71,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   // Start the HTTP server 
   app.listen(port, () => console.log({
     msg: `Server running on port`,
-    data: { port }
+    data: { port, env: process.env }
   }));
 })();
 

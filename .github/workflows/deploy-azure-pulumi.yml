@@ -1,40 +1,40 @@
-name: Build and Deploy to Azure
+# name: Build and Deploy to Azure
 
-on:
-  push:
-    branches:
-      - pulumi
+# on:
+#   push:
+#     branches:
+#       - pulumi
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#       - name: Login to Azure
+#         uses: azure/login@v1
+#         with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set up Pulumi
-        uses: pulumi/actions@v3
-        with:
-          command: preview
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+#       - name: Set up Pulumi
+#         uses: pulumi/actions@v3
+#         with:
+#           command: preview
+#         env:
+#           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Pulumi up
-        run: pulumi up --yes
-        env:
-          PULUMI_ACCESS_TOKEN:
-::contentReference[oaicite:23]{index=23}
+#       - name: Pulumi up
+#         run: pulumi up --yes
+#         env:
+#           PULUMI_ACCESS_TOKEN:
+# ::contentReference[oaicite:23]{index=23}
  
